@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetRestaurant.Core", "NetRe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetRestaurant.Infrastructure", "NetRestaurant.Insfrastructure\NetRestaurant.Infrastructure.csproj", "{800352B8-5EB2-43C9-8709-211F5349CC22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NetRestaurant.UI", "NetRestaurant.UI\NetRestaurant.UI.csproj", "{1574FBAF-2484-4DA7-807A-4082A3592489}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{800352B8-5EB2-43C9-8709-211F5349CC22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{800352B8-5EB2-43C9-8709-211F5349CC22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{800352B8-5EB2-43C9-8709-211F5349CC22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1574FBAF-2484-4DA7-807A-4082A3592489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1574FBAF-2484-4DA7-807A-4082A3592489}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1574FBAF-2484-4DA7-807A-4082A3592489}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1574FBAF-2484-4DA7-807A-4082A3592489}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
