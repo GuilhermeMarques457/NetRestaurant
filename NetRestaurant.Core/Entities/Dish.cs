@@ -13,5 +13,6 @@ namespace NetRestaurant.Core.Entities
         public String Description { get; set; }
         public Int64 CategoryId { get; set; }
         public Category Category { get; set; }
+        public List<Order> Orders { get; set; }
     }
 }
