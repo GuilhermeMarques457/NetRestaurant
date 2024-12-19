@@ -19,39 +19,39 @@ namespace NetRestaurant.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<User> Create(User entity)
+        public User Create(User entity)
         {
-            await _context.Users.AddAsync(entity);
+            _context.Users.Add(entity);
             _context.SaveChanges();
             return entity;
         }
 
-        public async Task<bool> Delete(long id)
+        public bool Delete(long id)
         {
-            var user = await Get(id);
+            var user = Get(id);
 
             if (user == null)
                 return false;
 
             _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return true;
         }
 
-        public async Task<User?> Get(long id)
+        public User Get(long id)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            return _context.Users.First(x => x.Id == id);
         }
 
-        public async Task<IList<User>> GetAll()
+        public IList<User> GetAll()
         {
-            return await _context.Users.ToListAsync();
+            return _context.Users.ToList();
         }
 
-        public async Task<User> Update(User entity)
+        public User Update(User entity)
         {
             _context.Users.Update(entity);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return entity;
         }
     }

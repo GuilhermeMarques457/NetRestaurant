@@ -8,10 +8,10 @@ namespace NetRestaurant.Core.Interfaces
 {
     public interface IRepository<T>
     {
-        Task<T?> Get(Int64 id);
-        Task<IList<T>> GetAll();
-        Task<T> Create(T entity);
-        Task<T> Update(T entity);
-        Task<Boolean> Delete(Int64 id);
+        T Get(Int64 id);
+        IList<T> GetAll();
+        T Create(T entity);
+        T Update(T entity);
+        Boolean Delete(Int64 id);
     }
 }
