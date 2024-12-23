@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - NetRestaurant.UI</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/custom.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/NetRestaurant.UI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <div class="d-flex">
+        <nav class="bg-primary text-white vh-100" style="width: 200px">
+            <div class="d-flex justify-content-center py-3">
+                <div class="bg-white rounded-circle" style="width: 80px; height: 80px">
+                    <img src="~/images/logo-net-restaurant.png" class="img-fluid" />
+                </div>
+            </div>
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link text-white" data-bs-toggle="collapse" href="#ordersMenu" role="button" aria-expanded="false" aria-controls="ordersMenu">
+                        <i class="fa-solid fa-cart-shopping"></i> Orders
+                    </a>
+                    <div class="collapse" id="ordersMenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a asp-action="Index" asp-controller="Orders" class="nav-link">
+                                    List
+                                </a>
+                                <a asp-action="Edit" asp-controller="Orders" asp-route-id="0" class="nav-link">
+                                    Create
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" data-bs-toggle="collapse" href="#CategoriesMenu" role="button" aria-expanded="false" aria-controls="CategoriesMenu">
+                        <i class="fa-solid fa-layer-group"></i> Categories
+                    </a>
+                    <div class="collapse" id="CategoriesMenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a asp-action="Index" asp-controller="Categories" class="nav-link">
+                                    List
+                                </a>
+                                <a asp-action="Edit" asp-controller="Categories" asp-route-id="0" class="nav-link">
+                                    Create
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" data-bs-toggle="collapse" href="#UsersMenu" role="button" aria-expanded="false" aria-controls="UsersMenu">
+                        <i class="fa-solid fa-user"></i> Users
+                    </a>
+                    <div class="collapse" id="UsersMenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a asp-action="Index" asp-controller="Users" class="nav-link">
+                                    List
+                                </a>
+                                <a asp-action="Edit" asp-controller="Users" asp-route-id="0" class="nav-link">
+                                    Create
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link text-white" data-bs-toggle="collapse" href="#DishesMenu" role="button" aria-expanded="false" aria-controls="DishesMenu">
+                        <i class="fa-solid fa-utensils"></i> Dishes
+                    </a>
+                    <div class="collapse" id="DishesMenu">
+                        <ul class="nav flex-column ms-3">
+                            <li class="nav-item">
+                                <a asp-action="Index" asp-controller="Dishes" class="nav-link">
+                                    List
+                                </a>
+                                <a asp-action="Edit" asp-controller="Dishes" asp-route-id="0" class="nav-link">
+                                    Create
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+
+        <div class="flex-grow-1 p-4 position-relative">
+            <main role="main">
+                @RenderBody()
+            </main>
+            <footer class="bg-primary p-3 position-fixed bottom-0 w-100 text-white d-flex justify-content-center" style="left: 0">
+                &copy; 2024 - NetRestaurant - ASP.NET Core MVC Simplified: Master What You Need
+            </footer>
+        </div>
+    </div>
+
+   
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
