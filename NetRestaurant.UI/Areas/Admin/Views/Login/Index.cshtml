@@ -1,0 +1,27 @@
+﻿@model LoginVM
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+
+<form asp-area="Admin" asp-action="Index" asp-controller="Login" class="w-75 mx-auto border-1 border-light rounded-3 p-5">
+    <h1 class="text-center mb-5">Admin Area</h1>
+    @if (ViewBag.Errors != null)
+    {
+        <div class="alert alert-danger">@ViewBag.Errors</div>
+    }
+    <div>
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <span asp-validation-for="Email"></span>
+    </div>
+    <div>
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" class="form-control" />
+        <span asp-validation-for="Password"></span>
+    </div>
+    <button class="btn btn-primary">Login</button>
+</form>

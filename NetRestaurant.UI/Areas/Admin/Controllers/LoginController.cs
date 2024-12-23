@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using NetRestaurant.Infrastructure.Repositories;
+using NetRestaurant.UI.Areas.Admin.ViewModels;
 using System.Security.Claims;
 
 namespace NetRestaurant.UI.Areas.Admin.Controllers
@@ -18,16 +19,17 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new LoginVM());
         }
 
-        public async Task<IActionResult> Login(string username, string password)
+        [HttpPost]
+        public async Task<IActionResult> Index(LoginVM login)
         {
-            var user = await _userRepository.GetByUsernamePassword(username, password);
+            var user = await _userRepository.GetByEmailPassword(login.Email, login.Password);
             if (user == null || !user.IsAdmin)
             {
-                ViewBag.Erros = "User does not exists or is not allowed";
-                return View();
+                ViewBag.Errors = "User does not exists or is not allowed";
+                return View(login);
             }
 
             var claims = new List<Claim>

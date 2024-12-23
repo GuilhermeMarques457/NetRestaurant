@@ -55,11 +55,17 @@ namespace NetRestaurant.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task<User?> GetByUsernamePassword(string username, string password)
+        public async Task<User?> GetByEmailPassword(string email, string password)
         {
-            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.Email == email);
 
-            return await _context.Users.FirstOrDefaultAsync(x => x.Name == username && x.Password == hashedPassword);
+            if (user == null) return null;
+
+            if (BCrypt.Net.BCrypt.Verify(password, user.Password))
+                return user;
+
+
+            return null;
         }
     }
 }
