@@ -57,7 +57,9 @@ namespace NetRestaurant.Infrastructure.Repositories
 
         public async Task<User?> GetByUsernamePassword(string username, string password)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.Name == username && x.Password == password);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
+
+            return await _context.Users.FirstOrDefaultAsync(x => x.Name == username && x.Password == hashedPassword);
         }
     }
 }
