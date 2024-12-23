@@ -54,5 +54,10 @@ namespace NetRestaurant.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<User?> GetByUsernamePassword(string username, string password)
+        {
+            return await _context.Users.FirstOrDefaultAsync(x => x.Name == username && x.Password == password);
+        }
     }
 }
