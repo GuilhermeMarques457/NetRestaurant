@@ -8,7 +8,10 @@ namespace NetRestaurant.UI.Helpers
     {
         public MappingProfiles() {
 
-            CreateMap<User, UserVM>().ReverseMap();
+            CreateMap<UserVM, User>()
+                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => BCrypt.Net.BCrypt.HashPassword(src.Password)));
+
+            CreateMap<User, UserVM>();
         }
     }
 }

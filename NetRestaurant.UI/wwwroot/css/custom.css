@@ -1,4 +1,15 @@
 :root {
     --bs-primary: #643797;
     --bs-primary-rgb: 100, 55, 151;
+    --bs-primary-darker: #46276a;
 }
+
+.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff;
+}
+
+    .btn-primary:hover {
+        background-color: var(--bs-primary-darker)
+    }

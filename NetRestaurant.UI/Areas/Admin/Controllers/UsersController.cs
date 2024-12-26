@@ -38,5 +38,30 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
 
             return View(userVM);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(UserVM userVM)
+        {
+            var user = _mapper.Map<UserVM, User>(userVM);
+
+            try
+            {
+                if (user.Id == 0)
+                    await _userRepository.Create(user);
+                else
+                    await _userRepository.Update(user);
+
+                TempData["Success"] = "The operation occurred successfully";
+            }
+            catch (Exception ex) 
+            {
+                TempData["Error"] = "The operation has failed";
+                return View(userVM);
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }
