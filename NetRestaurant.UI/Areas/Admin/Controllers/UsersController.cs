@@ -31,7 +31,7 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
             var user = await _userRepository.Get(id);
             var userVM = new UserVM();
 
-            if(user == null)
+            if (user == null)
                 return View(userVM);
 
             userVM = _mapper.Map<User, UserVM>(user);
@@ -53,7 +53,7 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
 
                 TempData["Success"] = "The operation occurred successfully";
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 TempData["Error"] = "The operation has failed";
                 return View(userVM);
@@ -62,6 +62,26 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Delete(Int64 id)
+        {
+            try
+            {
+                var isDeleted = await _userRepository.Delete(id);
 
+                if (isDeleted)
+                    TempData["Success"] = "The user was deleted successfully";
+                else
+                    TempData["Error"] = "An error ocorred with the operation";
+
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = "The operation has failed";
+            }
+
+            return RedirectToAction(nameof(Index));
+
+        }
     }
 }
