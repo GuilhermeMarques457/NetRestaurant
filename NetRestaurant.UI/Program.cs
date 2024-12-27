@@ -10,6 +10,10 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<CategoryRepository>();
+builder.Services.AddScoped<DishRepository>();
+builder.Services.AddScoped<OrderRepository>();
+
 builder.Services.AddAuthentication("AdminCookie")
     .AddCookie("AdminCookie", options =>
     {

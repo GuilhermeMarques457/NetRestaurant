@@ -12,6 +12,7 @@ namespace NetRestaurant.UI.Helpers
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => BCrypt.Net.BCrypt.HashPassword(src.Password)));
 
             CreateMap<User, UserVM>();
+            CreateMap<Category, CategoryVM>().ReverseMap();
         }
     }
 }

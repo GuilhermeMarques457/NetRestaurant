@@ -124,30 +124,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <script>
-        toastr.options = {
-            closeButton: true,
-            progressBar: true,
-            timeOut: 5000,
-            positionClass: "toast-bottom-right"
-        }
-
-        @if (TempData["Success"] != null)
-        {
-            <text>
-                    console.log('@TempData["Success"]')
-                    toastr.success('@TempData["Success"]')
-            </text>
-        }
-
-        @if (TempData["Error"] != null)
-        {
-            <text>
-                    console.log('@TempData["Error"]')
-                    toastr.error('@TempData["Error"]')
-            </text>
-        }
-    </script>
+    <partial name="_Toastr" />
 
 
     @await RenderSectionAsync("Scripts", required: false)

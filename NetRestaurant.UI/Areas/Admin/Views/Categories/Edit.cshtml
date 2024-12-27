@@ -1,0 +1,27 @@
+﻿@model CategoryVM
+
+@{
+    ViewBag.Title = Model.Id > 0 ? "Edit Category #" + Model.Id : "Creating a Category";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form asp-action="Edit" method="post" asp-route-id="@Model.Id">
+                <div class="mb-3">
+                    <label asp-for="Name" class="form-label">Name</label>
+                    <input asp-for="Name" class="form-control" />
+                    <span asp-validation-for="Name" class="text-danger"></span>
+                </div>
+
+                <div class="d-grid">
+                    <button class="btn btn-primary btn-lg">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

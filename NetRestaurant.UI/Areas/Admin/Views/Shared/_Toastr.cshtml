@@ -1,0 +1,24 @@
+﻿<script>
+    toastr.options = {
+        closeButton: true,
+        progressBar: true,
+        timeOut: 5000,
+        positionClass: "toast-bottom-right"
+    }
+
+    @if (TempData["Success"] != null)
+    {
+        <text>
+                    console.log('@TempData["Success"]')
+                    toastr.success('@TempData["Success"]')
+        </text>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <text>
+                    console.log('@TempData["Error"]')
+                    toastr.error('@TempData["Error"]')
+        </text>
+    }
+</script>
