@@ -45,7 +45,7 @@ namespace NetRestaurant.Infrastructure.Repositories
 
         public async Task<IList<Dish>> GetAll()
         {
-            return await _context.Dishes.ToListAsync();
+            return await _context.Dishes.Include(x => x.Category).ToListAsync();
         }
 
         public async Task<Dish> Update(Dish entity)

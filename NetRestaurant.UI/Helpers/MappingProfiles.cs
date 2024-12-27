@@ -13,6 +13,7 @@ namespace NetRestaurant.UI.Helpers
 
             CreateMap<User, UserVM>();
             CreateMap<Category, CategoryVM>().ReverseMap();
+            CreateMap<Dish, DishVM>().ReverseMap();
         }
     }
 }
