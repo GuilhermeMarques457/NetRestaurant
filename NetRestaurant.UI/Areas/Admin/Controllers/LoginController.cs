@@ -28,7 +28,7 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
             var user = await _userRepository.GetByEmailPassword(login.Email, login.Password);
             if (user == null || !user.IsAdmin)
             {
-                ViewBag.Errors = "User does not exists or is not allowed";
+                TempData["Error"] = "User does not exists or is not allowed";
                 return View(login);
             }
 
@@ -44,6 +44,12 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
             await HttpContext.SignInAsync("AdminCookie", principal);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
