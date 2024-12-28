@@ -21,5 +21,7 @@ namespace NetRestaurant.UI.Areas.Admin.ViewModels
         public Int64 CategoryId { get; set; }
         public List<SelectListItem> Categories { get; set; }
 
+        public IFormFile Image { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

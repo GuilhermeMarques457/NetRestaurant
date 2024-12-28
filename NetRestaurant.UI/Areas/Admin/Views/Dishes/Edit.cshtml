@@ -7,7 +7,7 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <form asp-action="Edit" method="post" asp-route-id="@Model.Id">
+            <form asp-action="Edit" method="post" asp-route-id="@Model.Id" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label asp-for="Name" class="form-label">Name</label>
                     <input asp-for="Name" class="form-control" />
@@ -34,6 +34,15 @@
                     <span asp-validation-for="CategoryId" class="text-danger"></span>
                 </div>
 
+                <div class="mb-3">
+                    <label asp-for="Image" class="form-label">Dish Image</label>
+                    <input type="file" asp-for="Image" id="Image" onchange="previewImage(event)" />
+                </div>
+
+                <div class="mb-3">
+                    <img id="preview" src="@Model.ImageUrl" class="img-thumbnail" style="max-width: 300px; max-height: 300px" />
+                </div>
+
                 <div class="d-grid">
                     <button class="btn btn-primary btn-lg">Save</button>
                 </div>
@@ -44,4 +53,15 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        function previewImage(event) {
+            const reader = new FileReader();
+            reader.onload = function() {
+                const output = document.getElementById("preview");
+                output.src = reader.result;
+            }
+            reader.readAsDataURL(event.target.files[0])
+        }
+    </script>
 }

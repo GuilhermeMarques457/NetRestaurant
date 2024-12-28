@@ -13,14 +13,16 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
     public class DishesController : Controller
     {
         private readonly IMapper _mapper;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly DishRepository _dishRepository;
         private readonly CategoryRepository _categoryRepository;
 
-        public DishesController(IMapper mapper, DishRepository dishRepository, CategoryRepository categoryRepository)
+        public DishesController(IMapper mapper, DishRepository dishRepository, CategoryRepository categoryRepository, IWebHostEnvironment webHostEnvironment)
         {
             _mapper = mapper;
             _dishRepository = dishRepository;
             _categoryRepository = categoryRepository;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -32,29 +34,51 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
         {
             var dish = await _dishRepository.Get(id);
             var dishVM = new DishVM();
-            
+
+            await GetCategoriesAsync(dishVM);
+
+            if (dish == null)
+                return View(dishVM);
+
+            dishVM = _mapper.Map<Dish, DishVM>(dish);
+            await GetCategoriesAsync(dishVM);
+
+            return View(dishVM);
+        }
+
+        private async Task GetCategoriesAsync(DishVM dishVM)
+        {
             var categories = await _categoryRepository.GetAll();
             dishVM.Categories = categories.Select(x => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
             {
                 Value = x.Id.ToString(),
                 Text = x.Name,
             }).ToList();
-
-            if (dish == null)
-                return View(dishVM);
-
-            dishVM = _mapper.Map<Dish, DishVM>(dish);
-
-            return View(dishVM);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(DishVM dishVM)
         {
-            var dish = _mapper.Map<DishVM, Dish>(dishVM);
-
             try
             {
+                if (dishVM.Image != null)
+                {
+                    var uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "dishes");
+                    Directory.CreateDirectory(uploadFolder);
+                    var fileExtension = Path.GetExtension(dishVM.Image.FileName);
+                    var fileName = Guid.NewGuid().ToString() + fileExtension;
+                    var filePath = Path.Combine(uploadFolder, fileName);
+
+                    using (var fileStream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await dishVM.Image.CopyToAsync(fileStream);
+                    }
+
+                    dishVM.ImageUrl = $"/images/dishes/{fileName}";
+                }
+
+                var dish = _mapper.Map<DishVM, Dish>(dishVM);
+
                 if (dish.Id == 0)
                     await _dishRepository.Create(dish);
                 else
