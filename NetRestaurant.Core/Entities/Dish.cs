@@ -13,6 +13,8 @@ namespace NetRestaurant.Core.Entities
         public String Description { get; set; }
         public Int64 CategoryId { get; set; }
         public Decimal Price { get; set; }
+        public TimeSpan MinimunTime { get; set; }
+        public TimeSpan MaximunTime { get; set; }
         public string ImageUrl { get; set; }
         public Category Category { get; set; }
         public List<Order> Orders { get; set; }

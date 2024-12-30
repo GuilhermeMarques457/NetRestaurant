@@ -24,3 +24,36 @@ html {
 .nav-link:hover{
     background-color: var(--bs-secondary);
 }
+
+/* #region CardDish */
+
+.card {
+    margin: 15px 0px;
+    border-radius: 20px;
+}
+
+.card-img-top {
+    border-radius: 20px;
+    height: 200px;
+    object-fit: cover;
+}
+
+.card-body {
+    margin: 20px 0;
+}
+
+.card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.card-text {
+    font-size: 1rem;
+}
+
+.price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #28a745;
+}
+/* #endregion */
