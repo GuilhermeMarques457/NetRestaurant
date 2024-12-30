@@ -19,6 +19,15 @@ namespace NetRestaurant.UI.Areas.Admin.ViewModels
 
         [Required(ErrorMessage = "The field {0} is required")]
         public Int64 CategoryId { get; set; }
+
+        [Required(ErrorMessage = "The field {0} is required")]
+        [RegularExpression(@"^(?:[0-1]\d|2[0-3]):[0-5]\d$", ErrorMessage = "The field {0} must be in HH:MM format")]
+        public TimeSpan MinimunTime { get; set; }
+
+        [RegularExpression(@"^(?:[0-1]\d|2[0-3]):[0-5]\d$", ErrorMessage = "The field {0} must be in HH:MM format")]
+        [Required(ErrorMessage = "The field {0} is required")]
+        public TimeSpan MaximunTime { get; set; }
+
         public List<SelectListItem> Categories { get; set; }
 
         public IFormFile Image { get; set; }

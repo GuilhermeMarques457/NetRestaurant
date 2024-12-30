@@ -7,5 +7,6 @@ namespace NetRestaurant.UI.Areas.Admin.ViewModels
         public Int64 Id { get; set; }
         [Required(ErrorMessage = "The field {0} is required")]
         public string Name { get; set; }
+        public string Color { get; set; }
     }
 }

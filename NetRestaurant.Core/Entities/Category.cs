@@ -10,6 +10,7 @@ namespace NetRestaurant.Core.Entities
     {
         public Int64 Id { get; set; }
         public string Name { get; set; }
+        public string Color { get; set; }
         public List<Dish> Dishes { get; set; }
     }
 }

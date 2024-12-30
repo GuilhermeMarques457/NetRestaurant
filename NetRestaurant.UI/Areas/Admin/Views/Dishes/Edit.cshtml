@@ -27,6 +27,18 @@
                 </div>
 
                 <div class="mb-3">
+                    <label asp-for="MinimunTime" class="form-label">Minimum Time</label>
+                    <input asp-for="MinimunTime" class="form-control" />
+                    <span asp-validation-for="MinimunTime" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="MaximunTime" class="form-label">Maximum Time</label>
+                    <input asp-for="MaximunTime" class="form-control" />
+                    <span asp-validation-for="MaximunTime" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
                     <label asp-for="CategoryId" class="form-label">Category</label>
                     <select asp-for="CategoryId" asp-items="Model.Categories" class="form-select">
                         <option value="">Select a Category</option>
@@ -53,8 +65,12 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js" integrity="sha512-pHVGpX7F/27yZ0ISY+VVjyULApbDlD0/X0rgGbTqCE7WFW5MezNTWG/dnhtbBuICzsd0WQPgpE4REBLv+UqChw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script>
+        $("#MinimunTime").mask("99:99")
+        $("#MaximunTime").mask("99:99")
+
         function previewImage(event) {
             const reader = new FileReader();
             reader.onload = function() {
