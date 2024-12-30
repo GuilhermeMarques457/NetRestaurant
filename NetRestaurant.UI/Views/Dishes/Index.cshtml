@@ -15,60 +15,26 @@
         </div>
         <div class="col-md-9">
             <div class="row">
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="~/images/dishes/6e57dd4a-0bed-400d-8652-5adb1275ed4f.jpeg" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">Dish Name</h5>
-                            <p class="card-text">Description of the dish</p>
-                            <p class="price">$19.99</p>
-                            <p class="card-text">
-                                <i class="fas fa-utensils"></i> Category Name
-                            </p>
-                            <p class="card-text">
-                                <i class="fas fa-clock"></i> 10-20 mins
-                            </p>
-                            <a href="#" class="btn btn-primary">Order Now</a>
+                @foreach (var dish in Model) {
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="@dish.ImageUrl" class="card-img-top" />
+                            <div class="card-body">
+                                <span class="badge" style="background-color: @dish.Category.Color">@dish.Category.Name</span>
+                                <h5 class="card-title mt-3">@dish.Name</h5>
+                                <p class="card-text">@dish.Description</p>
+                                <p class="price">$@dish.Price</p>
+                                <p class="card-text">
+                                    <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes} ")
+                                </p>
+                                <a href="#" class="btn btn-primary">Order Now</a>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="~/images/dishes/6e57dd4a-0bed-400d-8652-5adb1275ed4f.jpeg" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">Dish Name</h5>
-                            <p class="card-text">Description of the dish</p>
-                            <p class="price">$19.99</p>
-                            <p class="card-text">
-                                <i class="fas fa-utensils"></i> Category Name
-                            </p>
-                            <p class="card-text">
-                                <i class="fas fa-clock"></i> 10-20 mins
-                            </p>
-                            <a href="#" class="btn btn-primary">Order Now</a>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="~/images/dishes/6e57dd4a-0bed-400d-8652-5adb1275ed4f.jpeg" class="card-img-top" />
-                        <div class="card-body">
-                            <h5 class="card-title">Dish Name</h5>
-                            <p class="card-text">Description of the dish</p>
-                            <p class="price">$19.99</p>
-                            <p class="card-text">
-                                <i class="fas fa-utensils"></i> Category Name
-                            </p>
-                            <p class="card-text">
-                                <i class="fas fa-clock"></i> 10-20 mins
-                            </p>
-                            <a href="#" class="btn btn-primary">Order Now</a>
-                        </div>
-                    </div>
-                </div>
-
+                }
+              
 
             </div>
         </div>
