@@ -61,6 +61,11 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
         {
             try
             {
+                var dish = await _dishRepository.Get(dishVM.Id);
+
+                if (dish == null)
+                    dish = new Dish();
+
                 if (dishVM.Image != null)
                 {
                     var uploadFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images", "dishes");
@@ -76,8 +81,12 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
 
                     dishVM.ImageUrl = $"/images/dishes/{fileName}";
                 }
+                else
+                {
+                    dishVM.ImageUrl = dish.ImageUrl;
+                }
 
-                var dish = _mapper.Map<DishVM, Dish>(dishVM);
+                _mapper.Map(dishVM, dish);
 
                 if (dish.Id == 0)
                     await _dishRepository.Create(dish);

@@ -30,7 +30,7 @@ namespace NetRestaurant.UI.Areas.Admin.ViewModels
 
         public List<SelectListItem> Categories { get; set; }
 
-        public IFormFile Image { get; set; }
+        public IFormFile? Image { get; set; }
         public string ImageUrl { get; set; }
     }
 }

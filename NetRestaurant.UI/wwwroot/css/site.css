@@ -25,6 +25,20 @@ html {
     background-color: var(--bs-secondary);
 }
 
+main {
+    margin-bottom: 200px;
+}
+
+.nav-primary {
+    position: fixed;
+    z-index: 10;
+    width: 200px;
+}
+
+.main-container {
+    margin-left: 200px;
+}
+
 /* #region CardDish */
 
 .card {
