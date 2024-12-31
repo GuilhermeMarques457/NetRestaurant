@@ -4,10 +4,8 @@ using NetRestaurant.Infrastructure.Repositories;
 using NetRestaurant.UI.ViewModels;
 using System.Security.Claims;
 
-namespace NetRestaurant.UI.Areas.Admin.Controllers
+namespace NetRestaurant.UI.Controllers
 {
-    [Area("Admin")]
-    [Route("/admin/[controller]/[action]")]
     public class LoginController : Controller
     {
         private readonly UserRepository _userRepository;
@@ -17,31 +15,21 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
             _userRepository = userRepository;
         }
 
-        public IActionResult Index()
-        {
-            return View(new LoginVM());
-        }
-
         [HttpPost]
         public async Task<IActionResult> Index(LoginVM login)
         {
             var user = await _userRepository.GetByEmailPassword(login.Email, login.Password);
-            if (user == null || !user.IsAdmin)
-            {
-                TempData["Error"] = "User does not exists or is not allowed";
-                return View(login);
-            }
 
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Name),
-                new Claim(ClaimTypes.Role, "Admin")
+                new Claim(ClaimTypes.Role, "User")
             };
 
-            var identiy = new ClaimsIdentity(claims, "AdminCookie");
+            var identiy = new ClaimsIdentity(claims, "UserCookie");
             var principal = new ClaimsPrincipal(identiy);
 
-            await HttpContext.SignInAsync("AdminCookie", principal);
+            await HttpContext.SignInAsync("UserCookie", principal);
 
             return RedirectToAction("Index", "Home");
         }
@@ -49,7 +37,7 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Dishes");
         }
     }
 }

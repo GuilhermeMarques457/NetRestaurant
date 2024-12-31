@@ -27,16 +27,34 @@
                                 <p class="card-text">
                                     <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes} ")
                                 </p>
-                                <a href="#" class="btn btn-primary">Order Now</a>
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
+                                    Order Now
+                                </a>
                             </div>
                         </div>
                     </div>
 
 
                 }
-              
-
             </div>
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="authModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <partial name="_LoginForm" model="new LoginVM()"></partial>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
