@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NetRestaurant.UI.Areas.Admin.ViewModels
+namespace NetRestaurant.UI.ViewModels
 {
     public class UserVM
     {
-        public Int64 Id { get; set; }
+        public long Id { get; set; }
         [Required(ErrorMessage = "The field {0} is required")]
         public string Name { get; set; }
 
@@ -20,6 +20,6 @@ namespace NetRestaurant.UI.Areas.Admin.ViewModels
         public string Address { get; set; }
 
         [Required(ErrorMessage = "The field {0} is required")]
-        public Boolean IsAdmin { get; set; }
+        public bool IsAdmin { get; set; }
     }
 }

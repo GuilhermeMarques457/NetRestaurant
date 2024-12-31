@@ -27,6 +27,14 @@ builder.Services.AddAuthentication("AdminCookie")
         options.ExpireTimeSpan = TimeSpan.FromHours(2);
     });
 
+builder.Services.AddAuthentication("UserCookie")
+    .AddCookie("UserCookie", options =>
+    {
+        options.LoginPath = "/Login/Index";
+        options.AccessDeniedPath = "/AccessDenied";
+        options.ExpireTimeSpan = TimeSpan.FromHours(2);
+    });
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

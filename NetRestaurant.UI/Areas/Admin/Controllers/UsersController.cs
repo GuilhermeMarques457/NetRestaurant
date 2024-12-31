@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NetRestaurant.Core.Entities;
 using NetRestaurant.Infrastructure.Repositories;
-using NetRestaurant.UI.Areas.Admin.ViewModels;
+using NetRestaurant.UI.ViewModels;
 
 namespace NetRestaurant.UI.Areas.Admin.Controllers
 {

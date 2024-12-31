@@ -15,7 +15,8 @@
         </div>
         <div class="col-md-9">
             <div class="row">
-                @foreach (var dish in Model) {
+                @foreach (var dish in Model)
+                {
                     <div class="col-md-4">
                         <div class="card">
                             <img src="@dish.ImageUrl" class="card-img-top" />
@@ -25,7 +26,7 @@
                                 <p class="card-text">@dish.Description</p>
                                 <p class="price">$@dish.Price</p>
                                 <p class="card-text">
-                                    <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes} ")
+                                    <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes}m ")
                                 </p>
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
                                     Order Now
@@ -45,11 +46,16 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Login</h5>
+                <h5 class="modal-title">Authentication</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-                <partial name="_LoginForm" model="new LoginVM()"></partial>
+                <div id="loginForm">
+                    <partial name="_LoginForm" model="new LoginVM()"></partial>
+                </div>
+                <div id="registerForm" class="d-none">
+                    <partial name="_RegisterForm" model="new UserVM()"></partial>
+                </div>
             </div>
         </div>
     </div>
@@ -57,4 +63,22 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script>
+        $(document).ready(function() {
+            const loginForm = $("#loginForm");
+            const registerForm = $("#registerForm");
+
+            $("#switchToRegister").on("click", function(e) {
+                e.preventDefault();
+                loginForm.addClass("d-none")
+                registerForm.removeClass("d-none");
+            });
+
+            $("#switchToLogin").on("click", function(e) {
+                e.preventDefault();
+                loginForm.removeClass("d-none")
+                registerForm.addClass("d-none");
+            });
+        })
+    </script>
 }
