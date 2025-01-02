@@ -25,11 +25,14 @@ namespace NetRestaurant.UI.Controllers
                 var userId = Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 var user = await _userRepository.Get(userId);
 
-                await _orderRepository.AddDishToOrder(user, dishId);
+                var isDishAdded =  await _orderRepository.AddDishToOrder(user, dishId);
 
                 var itemCount = await _orderRepository.GetOrderItemCount(user);
 
-                return Json(new { success = true, itemCount });
+                if(isDishAdded)
+                    return Json(new { success = true, itemCount });
+                else
+                    return Json(new { success = false, message = "You've already had this dish in your Order, Finish it or add new ones" });
             }
             catch (Exception ex)
             {

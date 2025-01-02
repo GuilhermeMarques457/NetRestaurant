@@ -28,9 +28,25 @@
                                 <p class="card-text">
                                     <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes}m ")
                                 </p>
-                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#authModal">
-                                    Order Now
-                                </a>
+                                @if (User?.Identity?.IsAuthenticated ?? false)
+                                {
+                                    <a 
+                                        href="#" 
+                                        class="btn btn-primary order-now"
+                                        data-id="@dish.Id">
+                                        Order Now
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a 
+                                        href="#" 
+                                        class="btn btn-primary"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#authModal">
+                                        Order Now
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>
@@ -65,6 +81,7 @@
     <partial name="_ValidationScriptsPartial" />
 
     <script src="~/js/login.js"></script>
+    <script src="~/js/order.js"></script>
 
     <script>
         $(document).ready(function() {

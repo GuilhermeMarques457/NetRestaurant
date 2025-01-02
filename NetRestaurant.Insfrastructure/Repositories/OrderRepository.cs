@@ -56,7 +56,7 @@ namespace NetRestaurant.Infrastructure.Repositories
             return entity;
         }
 
-        public async Task AddDishToOrder(User user, long dishId)
+        public async Task<Boolean> AddDishToOrder(User user, long dishId)
         {
             var userOrder = await _context.Orders
                 .Include(x => x.Dishes)
@@ -73,12 +73,14 @@ namespace NetRestaurant.Infrastructure.Repositories
             if (dish == null)
                 throw new Exception("Dish not found");
 
-            if(!userOrder.Dishes.Contains(dish))
-            {
-                userOrder.Dishes.Add(dish);
-            }
+            if(userOrder.Dishes.Contains(dish)) 
+                return false;
+
+            userOrder.Dishes.Add(dish);
 
             await _context.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<int> GetOrderItemCount(User user)
