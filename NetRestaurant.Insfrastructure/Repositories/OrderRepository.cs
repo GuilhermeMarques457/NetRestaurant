@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NetRestaurant.Core.Entities;
+using NetRestaurant.Core.Enums;
 using NetRestaurant.Core.Interfaces;
 using NetRestaurant.Insfrastructure;
 using System;
@@ -53,6 +54,40 @@ namespace NetRestaurant.Infrastructure.Repositories
             _context.Orders.Update(entity);
             await _context.SaveChangesAsync();
             return entity;
+        }
+
+        public async Task AddDishToOrder(User user, long dishId)
+        {
+            var userOrder = await _context.Orders
+                .Include(x => x.Dishes)
+                .FirstOrDefaultAsync(x => x.User == user && x.OrderStatus == OrderStatus.Pending);
+
+            if (userOrder == null)
+            {
+                userOrder = new Order { User = user, OrderStatus = OrderStatus.Pending };
+                await _context.Orders.AddAsync(userOrder);
+            }
+
+            var dish = await _context.Dishes.FirstOrDefaultAsync(x => x.Id == dishId);
+
+            if (dish == null)
+                throw new Exception("Dish not found");
+
+            if(!userOrder.Dishes.Contains(dish))
+            {
+                userOrder.Dishes.Add(dish);
+            }
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<int> GetOrderItemCount(User user)
+        {
+            var userOrder = await _context.Orders
+               .Include(x => x.Dishes)
+               .FirstOrDefaultAsync(x => x.User == user && x.OrderStatus == OrderStatus.Pending);
+
+            return userOrder == null ? 0 : userOrder.Dishes.Count();
         }
     }
 }

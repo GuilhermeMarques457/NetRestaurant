@@ -35,6 +35,7 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Role, "Admin")
             };
 

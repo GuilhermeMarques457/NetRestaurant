@@ -12,6 +12,7 @@ namespace NetRestaurant.Core.Entities
         public Order()
         {
             CreatedAt = DateTime.Now;
+            Dishes = new List<Dish>();
         }
 
         public Int64 Id { get; set; }
