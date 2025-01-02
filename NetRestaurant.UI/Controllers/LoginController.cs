@@ -22,14 +22,26 @@ namespace NetRestaurant.UI.Controllers
         [HttpPost]
         public async Task<IActionResult> Index(LoginVM login)
         {
-            var user = await _userRepository.GetByEmailPassword(login.Email, login.Password);
+            try
+            {
+                var user = await _userRepository.GetByEmailPassword(login.Email, login.Password);
 
-            await Authenticate(user);
+                if (user == null)
+                {
+                    return Json(new { success = false, message = "Invalid login credentials." } );
+                }
 
-            return RedirectToAction("Index", "Home");
+                await Authenticate(user);
+
+                return Json(new { success = true, redirectUrl = Url.Action("Index", "Dishes") });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "An unexpected error occurred. Please try again." });
+            }
         }
 
-      
+
 
         [HttpPost]
         public async Task<IActionResult> Register(UserVM userVM)
@@ -61,7 +73,7 @@ namespace NetRestaurant.UI.Controllers
             await HttpContext.SignOutAsync();
             return RedirectToAction("Index", "Dishes");
         }
-        private async Task Authenticate(User? user)
+        private async Task Authenticate(User user)
         {
             var claims = new List<Claim>
             {
