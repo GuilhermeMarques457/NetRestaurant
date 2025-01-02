@@ -39,5 +39,15 @@ namespace NetRestaurant.UI.Controllers
                 return Json(new { success = false });
             }
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetOrderCount()
+        {
+            var userId = Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var user = await _userRepository.Get(userId);
+
+            var itemCount = await _orderRepository.GetOrderItemCount(user);
+            return Json(new { success = true, itemCount });
+        }
     }
 }

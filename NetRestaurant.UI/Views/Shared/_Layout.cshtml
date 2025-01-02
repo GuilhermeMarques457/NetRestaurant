@@ -46,7 +46,7 @@
                             <div class="shopping-cart position-relative">
                                 <a asp-action="Cart" asp-controller="Order" class="btn btn-light text-primary">
                                     <i class="fa fa-shopping-cart"></i>
-                                    <span id="cart-count" class="position-absolute top-0 start-100 translate-middle bagde rounded-pill bg-danger">
+                                    <span id="cart-count">
                                         0
                                     </span>
                                 </a>
@@ -74,6 +74,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/orderCount.js" asp-append-version="true"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)

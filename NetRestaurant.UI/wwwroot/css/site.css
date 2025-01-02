@@ -71,3 +71,20 @@ main {
     color: #28a745;
 }
 /* #endregion */
+
+#cart-count {
+    color: #fff;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 100%;
+    transform: translate(-50%, -30%);
+    border-radius: 50%;
+    background-color: var(--bs-danger);
+    width: 20px;
+    height: 20px;
+    font-size: 12px;
+    padding: 0;
+}
