@@ -1,0 +1,91 @@
+﻿@using Microsoft.AspNetCore.Html
+@using NetRestaurant.Core.Enums
+@model Order
+
+@{
+    ViewBag.Title = "See items - Checking Ordering";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 bg-light rounded-3 p-5">
+            <h3>Order Info</h3>
+            <b>Order Id:</b> <span>@Model.Id</span> <br />
+            <b>Order Status:</b> <span>@Model.OrderStatus.ToString()</span> <br />
+            <b>Time Created:</b> <span>@Model.CreatedAt.ToShortDateString()</span> <br />
+            <b>Items Count:</b> <span>@Model.Dishes.Count()</span> <br />
+            <hr />
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>Total: $@Model.Dishes.Sum(x => x.Price)</h5>
+                <a href="#"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#statusModal">
+                    Change Status
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                @foreach (var dish in Model.Dishes)
+                {
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="@dish.ImageUrl" class="card-img-top" />
+                            <div class="card-body">
+                                <span class="badge" style="background-color: @dish.Category.Color">@dish.Category.Name</span>
+                                <h5 class="card-title mt-3">@dish.Name</h5>
+                                <p class="card-text">@dish.Description</p>
+                                <p class="price">$@dish.Price</p>
+                                <p class="card-text">
+                                    <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes}m ")
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="statusModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Change Status of Order #@Model.Id</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                What status do you want to set to this order?
+
+                <div class="d-flex flex-wrap gap-1 mt-4">
+                    @StatusButton("Pending", OrderStatus.Pending, Model.Id, Model.OrderStatus)
+                    @StatusButton("Processing", OrderStatus.Processing, Model.Id, Model.OrderStatus)
+                    @StatusButton("Shipped", OrderStatus.Shipped, Model.Id, Model.OrderStatus)
+                    @StatusButton("Delivered", OrderStatus.Delivered, Model.Id, Model.OrderStatus)
+                    @StatusButton("Cancelled", OrderStatus.Cancelled, Model.Id, Model.OrderStatus)
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    private HtmlString StatusButton(string text, OrderStatus status, Int64 orderId, OrderStatus currentStatus)
+    {
+        var isCurrent = status == currentStatus;
+        var buttonClass = isCurrent ? "btn-secondary" : "btn-primary";
+        var isDisabled = isCurrent ? "disabled" : "";
+
+        return new HtmlString($@"
+            <a href='/Admin/Orders/SetStatus?id={orderId}&status={(int)status}'
+               class='btn {buttonClass} btn-sm px-2'
+               {isDisabled}>
+               {text} 
+            </a>");
+    }
+}

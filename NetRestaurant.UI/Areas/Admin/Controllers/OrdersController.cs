@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetRestaurant.Core.Enums;
 using NetRestaurant.Infrastructure.Repositories;
 
 namespace NetRestaurant.UI.Areas.Admin.Controllers
@@ -22,6 +23,21 @@ namespace NetRestaurant.UI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             return View(await _orderRepository.GetAll());
+        }
+
+        public async Task<IActionResult> Details(Int64 Id)
+        {
+            return View(await _orderRepository.Get(Id));
+        }
+
+        public async Task<IActionResult> SetStatus(Int64 Id, int status)
+        {
+            var order = await _orderRepository.Get(Id);
+            order.OrderStatus = Enum.Parse<OrderStatus>(status.ToString());
+
+            await _orderRepository.Update(order);
+
+            return RedirectToAction(nameof(Details), new { Id = Id });
         }
 
         [HttpGet]
