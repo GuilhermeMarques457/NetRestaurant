@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NetRestaurant.Core.Entities;
 using NetRestaurant.Infrastructure.Repositories;
 using System.Security.Claims;
 
@@ -78,6 +79,33 @@ namespace NetRestaurant.UI.Controllers
 
             return RedirectToAction(nameof(Cart));
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Finish(Int64 Id)
+        {
+            try
+            {
+                var order = await _orderRepository.Get(Id);
+                order.OrderStatus = Core.Enums.OrderStatus.Processing;
+
+                await _orderRepository.Update(order);
+
+                TempData["Success"] = "You've finished the order proccess, wait for the Chef!";
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "The operation has failed";
+
+            }
+
+            return RedirectToAction(nameof(Thanks));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Thanks()
+        {
+            return View();
         }
     }
 }
