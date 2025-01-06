@@ -41,7 +41,10 @@ namespace NetRestaurant.Infrastructure.Repositories
 
         public async Task<Order?> Get(long id)
         {
-            return await _context.Orders.FirstOrDefaultAsync(x => x.Id == id);
+            return await _context.Orders
+                .Include(x => x.Dishes)
+                .ThenInclude(x => x.Category)
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<IList<Order>> GetAll()
@@ -98,6 +101,17 @@ namespace NetRestaurant.Infrastructure.Repositories
               .Include(x => x.Dishes)
               .ThenInclude(d => d.Category)
               .FirstOrDefaultAsync(x => x.User == user && x.OrderStatus == OrderStatus.Pending);
+
+            return userOrder;
+        }
+
+        public async Task<List<Order>> GetListOrderByUser(User user)
+        {
+            var userOrder = await _context.Orders
+              .Include(x => x.Dishes)
+              .ThenInclude(d => d.Category)
+              .Where(x => x.User == user)
+              .ToListAsync();
 
             return userOrder;
         }

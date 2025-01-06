@@ -52,12 +52,21 @@ namespace NetRestaurant.UI.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Cart()
+        public async Task<IActionResult> Cart(Int64 Id = 0)
         {
-            var userId = Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier));
-            var user = await _userRepository.Get(userId);
+            var order = new Order();
 
-            var order = await _orderRepository.GetOrderByUser(user);
+            if(Id == 0)
+            {
+                var userId = Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier));
+                var user = await _userRepository.Get(userId);
+
+                order = await _orderRepository.GetOrderByUser(user);
+            }
+            else
+            {
+                order = await _orderRepository.Get(Id);
+            }
 
             return View(order);
         }
@@ -103,9 +112,41 @@ namespace NetRestaurant.UI.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Cancel(Int64 Id)
+        {
+            try
+            {
+                var order = await _orderRepository.Get(Id);
+                order.OrderStatus = Core.Enums.OrderStatus.Cancelled;
+
+                await _orderRepository.Update(order);
+
+                TempData["Success"] = "You've canceled the order proccess, make a new Order!";
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "The operation has failed";
+            }
+
+            return RedirectToAction("Index", "Dishes");
+
+        }
+
+        [HttpGet]
         public async Task<IActionResult> Thanks()
         {
             return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> History()
+        {
+            var userId = Convert.ToInt64(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            var user = await _userRepository.Get(userId);
+
+            var orders = await _orderRepository.GetListOrderByUser(user);
+
+            return View(orders);
         }
     }
 }

@@ -5,7 +5,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewBag.Title = "See items - Finish Ordering";
+    ViewBag.Title = "See items - Checking Ordering";
 }
 
 
@@ -19,7 +19,10 @@
             <hr />
             <div class="d-flex justify-content-between align-items-center">
                 <h5>Total: $@Model.Dishes.Sum(x => x.Price)</h5>
-                <a asp-action="Finish" asp-controller="Order" asp-route-id="@Model.Id" class="btn btn-primary">Finish Ordering</a>
+                @if (Model.OrderStatus == NetRestaurant.Core.Enums.OrderStatus.Pending)
+                {
+                    <a asp-action="Finish" asp-controller="Order" asp-route-id="@Model.Id" class="btn btn-primary">Finish Ordering</a>
+                }
             </div>
         </div>
         <div class="col-md-12">
@@ -37,10 +40,12 @@
                                 <p class="card-text">
                                     <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes}m ")
                                 </p>
-
-                                <a class="btn btn-primary" asp-action="RemoveItem" asp-controller="Order" asp-route-dishId="@dish.Id" asp-route-orderId="@Model.Id">
-                                    Remove Item
-                                </a>
+                                @if (Model.OrderStatus == NetRestaurant.Core.Enums.OrderStatus.Pending)
+                                {
+                                    <a class="btn btn-primary" asp-action="RemoveItem" asp-controller="Order" asp-route-dishId="@dish.Id" asp-route-orderId="@Model.Id">
+                                        Remove Item
+                                    </a>
+                                }
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,33 @@
+﻿@model List<Order>
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "See Orders History";
+}
+
+<div class="container">
+    @foreach (var order in Model)
+    {
+        <div class="rounded-3 my-3 border-1 border border-light">
+            <div class="py-2 bg-primary px-2">
+                <h3 class="text-white">Order Info #@order.Id</h3>
+            </div>
+            <div class="p-3">
+                <b>Time Created:</b> <span>@order.CreatedAt.ToShortDateString()</span> <br />
+                <b>Items Count:</b> <span>@order.Dishes.Count()</span> <br />
+                <b>Status:</b> <span>@order.OrderStatus</span>
+                <hr />
+            </div>
+            <div class="d-flex justify-content-between align-items-center bg-light p-3">
+                <h5>Total: $@order.Dishes.Sum(x => x.Price)</h5>
+                
+                <div class="btn-group">
+                    <a class="btn btn-primary" asp-action="Cart" asp-controller="Order" asp-route-id="@order.Id">See Details</a>
+                    <a class="btn btn-danger" asp-action="Cancel" asp-controller="Order" asp-route-id="@order.Id">Cancel</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
