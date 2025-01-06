@@ -54,5 +54,24 @@ namespace NetRestaurant.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<IList<Dish>> GetFilteredDishes(decimal? minPrice, decimal? maxPrice, long? categoryId, string search)
+        {
+            var query = _context.Dishes.Include(x => x.Category).AsQueryable();
+
+            if(maxPrice.HasValue)
+                query = query.Where(x => x.Price <= maxPrice.Value);
+
+            if(minPrice.HasValue)
+                query = query.Where(x => x.Price >= minPrice.Value);
+
+            if(categoryId.HasValue)
+                query = query.Where(x => x.Category.Id == categoryId.Value);
+
+            if(!string.IsNullOrEmpty(search))
+                query = query.Where(x => x.Name.Contains(search) || x.Description.Contains(search));
+
+            return await query.ToListAsync();
+        }
     }
 }
