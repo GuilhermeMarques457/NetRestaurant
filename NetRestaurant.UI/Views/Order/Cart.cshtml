@@ -1,0 +1,53 @@
+﻿@model Order
+
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewBag.Title = "See items - Finish Ordering";
+}
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 bg-light rounded-3 p-5">
+            <h3>Order Info</h3>
+            <b>Order Id:</b> <span>@Model.Id</span> <br />
+            <b>Time Created:</b> <span>@Model.CreatedAt.ToShortDateString()</span> <br />
+            <b>Items Count:</b> <span>@Model.Dishes.Count()</span> <br />
+            <hr />
+            <div class="d-flex justify-content-between align-items-center">
+                <h5>Total: $@Model.Dishes.Sum(x => x.Price)</h5>
+                <a asp-action="Finish" asp-controller="Order" class="btn btn-primary">Finish Ordering</a>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                @foreach (var dish in Model.Dishes)
+                {
+                    <div class="col-md-4">
+                        <div class="card">
+                            <img src="@dish.ImageUrl" class="card-img-top" />
+                            <div class="card-body">
+                                <span class="badge" style="background-color: @dish.Category.Color">@dish.Category.Name</span>
+                                <h5 class="card-title mt-3">@dish.Name</h5>
+                                <p class="card-text">@dish.Description</p>
+                                <p class="price">$@dish.Price</p>
+                                <p class="card-text">
+                                    <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes}m ")
+                                </p>
+
+                                <a class="btn btn-primary order-now" asp-action="RemoveItem" asp-controller="Order">
+                                    Remove Item
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

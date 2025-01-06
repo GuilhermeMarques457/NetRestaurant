@@ -91,5 +91,15 @@ namespace NetRestaurant.Infrastructure.Repositories
 
             return userOrder == null ? 0 : userOrder.Dishes.Count();
         }
+
+        public async Task<Order> GetOrderByUser(User user)
+        {
+            var userOrder = await _context.Orders
+              .Include(x => x.Dishes)
+              .ThenInclude(d => d.Category)
+              .FirstOrDefaultAsync(x => x.User == user && x.OrderStatus == OrderStatus.Pending);
+
+            return userOrder;
+        }
     }
 }

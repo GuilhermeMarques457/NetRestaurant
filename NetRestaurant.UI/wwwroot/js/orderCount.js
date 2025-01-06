@@ -8,7 +8,7 @@
             }
         },
         error: function () {
-            toastr.error("An error occurred while fetching order count.");
+            //toastr.error("An error occurred while fetching order count.");
         }
     })
 })
