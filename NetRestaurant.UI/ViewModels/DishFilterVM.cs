@@ -7,7 +7,7 @@ namespace NetRestaurant.UI.ViewModels
     {
         public decimal? MinPrice { get; set; }
         public decimal? MaxPrice { get; set; }
-        public string Search {  get; set; }
+        public string? Search {  get; set; }
         public Int64? CategoryId { get; set; }
         public List<SelectListItem> Categories { get; set; }
         public List<Dish> FilteredDishes { get; set; }
