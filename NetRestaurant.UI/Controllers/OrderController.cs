@@ -60,5 +60,24 @@ namespace NetRestaurant.UI.Controllers
 
             return View(order);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> RemoveItem(Int64 dishId, Int64 orderId)
+        {
+            try
+            {
+                await _orderRepository.RemoveItem(dishId, orderId);
+
+                TempData["Success"] = "The operation occurred successfully";
+            }
+            catch (Exception)
+            {
+                TempData["Error"] = "The operation has failed";
+
+            }
+
+            return RedirectToAction(nameof(Cart));
+
+        }
     }
 }

@@ -101,5 +101,20 @@ namespace NetRestaurant.Infrastructure.Repositories
 
             return userOrder;
         }
+
+        public async Task<Boolean> RemoveItem(Int64 dishId, Int64 orderId)
+        {
+            var order = await _context.Orders
+                .Include(x => x.Dishes)
+                .FirstOrDefaultAsync(x => x.Id == orderId);
+
+            var dish = await _context.Dishes.FirstOrDefaultAsync(x => x.Id == dishId);
+
+            order.Dishes.Remove(dish);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

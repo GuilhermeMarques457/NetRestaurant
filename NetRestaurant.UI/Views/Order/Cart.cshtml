@@ -38,7 +38,7 @@
                                     <i class="fas fa-clock"></i> @($"{(int)dish.MinimunTime.TotalHours}h{dish.MinimunTime.Minutes}m - {(int)dish.MaximunTime.TotalHours}h{dish.MaximunTime.Minutes}m ")
                                 </p>
 
-                                <a class="btn btn-primary order-now" asp-action="RemoveItem" asp-controller="Order">
+                                <a class="btn btn-primary" asp-action="RemoveItem" asp-controller="Order" asp-route-dishId="@dish.Id" asp-route-orderId="@Model.Id">
                                     Remove Item
                                 </a>
                             </div>
